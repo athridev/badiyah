@@ -1642,8 +1642,12 @@ function pickMount(maxDist=4.5){
   }
   return best;
 }
+// Definite and masculine, so it reads correctly after a preposition ("على
+// الحصان الأشقر"), as an object ("ركبتَ الحصان الأشقر") and as a subject
+// ("صار الحصان الأشقر لك") without needing a different case ending each time.
 function mountName(m){
-  return m.kind==='horse'?('فرسٌ '+m.coat.name):'جمل';
+  // the adjective takes the article too, agreeing with the definite noun
+  return m.kind==='horse'?('الحصان ال'+m.coat.name):'الجمل';
 }
 function mount(m){
   // land first — the flight toggle is gated on !riding, so a fly+ride hybrid
@@ -1686,7 +1690,7 @@ function feedMount(m){
   if(m.fed>=3){
     m.tame=true;
     if(riding===m)m.buck=1e9;
-    toast('أنِسَت بك الدابّة! صارت '+mountName(m)+' لك',3.5);
+    toast('أنِسَت بك الدابّة! صار '+mountName(m)+' لك',3.5);
     for(let i=0;i<3;i++)burst(m.x-0.5,m.y+m.K.hgt-0.3+i*0.2,m.z-0.5,'#e05a7a');
     sfx.craft();
   }else{
